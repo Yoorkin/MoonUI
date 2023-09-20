@@ -1,0 +1,110 @@
+<html lang="en">
+  <body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+  </body>
+  <script>
+    async function main(){
+      var output_buffer = []
+      var str_conv_buf = []
+      const canvas = document.getElementById("canvas")
+      const ctx = canvas.getContext('2d') 
+      var moonbit = null
+      const spectest = {
+        string: {
+          beginConversion: () => str_conv_buf = [],
+          pushChar: (i,x) => str_conv_buf.push(String.fromCharCode(x)),
+          endConversion: () => str_conv_buf.join(''),
+          debugString: (js_str) => console.log(js_str)
+        },
+        canvas: {
+          clearRect: (x,y,w,h) => ctx.clearRect(x,y,w,h),
+          fillRect: (x,y,w,h) => {
+            console.log("fillRect",x,y,w,h)
+            ctx.fillRect(x,y,w,h)
+          },
+          strokeRect: (x,y,w,h) => ctx.strokeRect(x,y,w,h),
+          fillEllipse: (x,y,w,h) => {
+            ctx.beginPath();
+            ctx.ellipse(x + w/2, y + h/2, w/2, h/2, Math.PI / 4, 0, 2 * Math.PI);
+            ctx.fill();
+          },
+          strokeEllipse: (x,y,w,h) => {
+            ctx.beginPath();
+            ctx.ellipse(x + w/2, y + h/2, w/2, h/2, Math.PI / 4, 0, 2 * Math.PI);
+            ctx.stroke();
+          },
+          setColor: (c) => {
+            console.log("color:",c)
+            ctx.fillStyle = c
+            ctx.strokeStyle = c
+          },
+          fillText: (text,x,y) => ctx.fillText(text,x,y),
+          setFont: (font) => {
+            console.log("font:",font)
+            ctx.font = font
+          },
+          measureTextWidth: (text) => {
+            const metrics = ctx.measureText(text);
+            return metrics.width
+          },
+          measureTextHeight: (text) => {
+            const metrics = ctx.measureText(text);
+            const actualHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+            return actualHeight
+          },
+          fillRoundRect: (x,y,w,h,r) => {
+            ctx.beginPath()
+            ctx.roundRect(x,y,w,h,r)
+            ctx.fill()
+          },
+          strokeRoundRect: (x,y,w,h,r) => {
+            ctx.beginPath()
+            ctx.roundRect(x,y,w,h,r)
+            ctx.stroke()
+          },
+          strokeLine: (x1,y1,x2,y2) => {
+            console.log("TODO DRAE LINE")
+          }
+        },
+        spectest: {
+          print_i32: (x) => console.log(String(x)),
+          print_f64: (x) => console.log(String(x)),
+          print_char: (x) => {
+            const str = String.fromCharCode(x)
+            if (str === "\n") {
+                console.log(output_buffer.join(''))
+                output_buffer = []
+            } else {
+                output_buffer.push(str);
+            }
+          }
+        },
+      };
+      
+      const obj = await WebAssembly.instantiateStreaming(fetch("main.wasm"), spectest)
+      obj.instance.exports._start()
+      // obj.instance.exports["MoonUI/UI::initialize"](canvas.width, canvas.height)
+      moonbit = obj.instance.exports
+      console.log(moonbit)
+      moonbit["MoonUI/ui::initialize"](canvas.width, canvas.height)
+      canvas.addEventListener("mousemove", (e) => {
+        moonbit['MoonUI/ui::on_mouse_move'](0, 0, e.offsetX,e.offsetY)
+      });
+      canvas.addEventListener("mousedown", (e) => {
+        moonbit['MoonUI/ui::on_mouse_down'](0, 0, e.offsetX,e.offsetY)
+      })
+      canvas.addEventListener("mouseup", (e) => {
+        moonbit['MoonUI/ui::on_mouse_up'](0, 0, e.offsetX,e.offsetY)
+      })
+    } 
+    main()
+  </script>
+  <style>
+    .asdf{
+      background-color: #22a6b3f0;
+    }
+    body{
+      background-color: rgb(175, 175, 175);
+    }
+  </style>
+</html>
