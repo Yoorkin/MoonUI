@@ -10,11 +10,17 @@
       const ctx = canvas.getContext('2d') 
       var moonbit = null
       const spectest = {
-        string: {
-          beginConversion: () => str_conv_buf = [],
-          pushChar: (i,x) => str_conv_buf.push(String.fromCharCode(x)),
-          endConversion: () => str_conv_buf.join(''),
-          debugString: (js_str) => console.log(js_str)
+        // string: {
+        //   beginConversion: () => str_conv_buf = [],
+        //   pushChar: (i,x) => str_conv_buf.push(String.fromCharCode(x)),
+        //   endConversion: () => str_conv_buf.join(''),
+        //   debugString: (js_str) => console.log(js_str)
+        // },
+        js_string: {
+          new: (js_str) => String(js_str),
+          log: (js_str) => console.log(js_str),
+          append: (js_str, other) => js_str.push(other),
+          empty: (js_str) => !!js_str,
         },
         canvas: {
           clearRect: (x,y,w,h) => ctx.clearRect(x,y,w,h),
@@ -81,20 +87,21 @@
         },
       };
       
-      const obj = await WebAssembly.instantiateStreaming(fetch("main.wasm"), spectest)
+      const wasmUri = "target/wasm-gc/release/build/main/main.wasm"
+      const obj = await WebAssembly.instantiateStreaming(fetch(wasmUri), spectest)
       obj.instance.exports._start()
       // obj.instance.exports["MoonUI/UI::initialize"](canvas.width, canvas.height)
       moonbit = obj.instance.exports
       console.log(moonbit)
-      moonbit["MoonUI/ui::initialize"](canvas.width, canvas.height)
+      moonbit["initialize"](canvas.width, canvas.height)
       canvas.addEventListener("mousemove", (e) => {
-        moonbit['MoonUI/ui::on_mouse_move'](0, 0, e.offsetX,e.offsetY)
+        moonbit['on_mouse_move'](0, 0, e.offsetX,e.offsetY)
       });
       canvas.addEventListener("mousedown", (e) => {
-        moonbit['MoonUI/ui::on_mouse_down'](0, 0, e.offsetX,e.offsetY)
+        moonbit['on_mouse_down'](0, 0, e.offsetX,e.offsetY)
       })
       canvas.addEventListener("mouseup", (e) => {
-        moonbit['MoonUI/ui::on_mouse_up'](0, 0, e.offsetX,e.offsetY)
+        moonbit['on_mouse_up'](0, 0, e.offsetX,e.offsetY)
       })
     } 
     main()
