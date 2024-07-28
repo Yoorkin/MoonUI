@@ -5,16 +5,16 @@ struct Window {
 let window : Window = { element: Rectangle(Color::empty(), Color::empty()) }
 
 pub enum Color {
-  Js_repr(String)
+  Color(String)
 }
 
 pub fn Color::empty() -> Color {
-  Js_repr("rgba(0,0,0,0)")
+  Color("rgba(0,0,0,0)")
 }
 
 pub fn js_color(self : Color) -> JsString {
   match self {
-    Js_repr(x) => from_string(x)
+    Color(x) => from_string(x)
   }
 }
 
@@ -65,8 +65,8 @@ pub enum Handler {
 
 pub enum Element {
   Stack(Array[Element])
-  Margin(Int, Int, Int, Int, Element)
-  Fixed(Int, Int, Int, Int, Element)
+  Margin((Int, Int, Int, Int), Element)
+  Fixed((Int, Int, Int, Int), Element)
   Grid(Int, Int, Int, Array[(Int, Int, Element)])
   Column(Int, Int, Array[Element])
   Row(Int, Int, Array[Element])
@@ -132,7 +132,7 @@ pub fn is_cursor_inside(config : Config, area : Area) -> Bool {
 pub fn render(element : Element, area : Area) -> Unit {
   match element {
     Stack(xs) => xs.iter().each(fn(x) { render(x, area) })
-    Margin(t, r, b, l, child) =>
+    Margin((t, r, b, l), child) =>
       render(
         child,
         {
@@ -142,7 +142,7 @@ pub fn render(element : Element, area : Area) -> Unit {
           height: area.height - t - b,
         },
       )
-    Fixed(x, y, width, height, child) =>
+    Fixed((x, y, width, height), child) =>
       render(child, { left: area.left + x, top: area.top + y, width, height })
     Grid(col, row, gap, xs) => {
       let col_size = area.width / col

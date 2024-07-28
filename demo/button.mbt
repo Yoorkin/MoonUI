@@ -6,48 +6,36 @@ fn button2(text : String) -> @ui.Element {
     [
       @ui.multi_style(
         Margin(
-          5,
-          5,
-          5,
-          5,
-          Roundrect(Js_repr("#22a6b3"), Js_repr("#7ed5dfb5"), 10),
+          (5, 5, 5, 5),
+          Roundrect(Color("#22a6b3"), Color("#7ed5dfb5"), 10),
         ),
         [
           Highlight(
             Margin(
-              0,
-              0,
-              0,
-              0,
-              Roundrect(Js_repr("#7ed6df"), Js_repr("#7ed5dfb5"), 10),
+              (0, 0, 0, 0),
+              Roundrect(Color("#7ed6df"), Color("#7ed5dfb5"), 10),
             ),
           ),
           Pressed(
             Margin(
-              10,
-              10,
-              10,
-              10,
-              Roundrect(Js_repr("#137983"), Js_repr("#7ed5dfb5"), 10),
+              (10, 10, 10, 10),
+              Roundrect(Color("#137983"), Color("#7ed5dfb5"), 10),
             ),
           ),
         ],
       ),
-      Text(@ui.Font::default(), "Sample Button", Js_repr("white")),
+      Text(@ui.Font::default(), "Sample Button", Color("white")),
     ],
   )
 }
 
 pub fn panel(child : @ui.Element) -> @ui.Element {
   Margin(
-    5,
-    5,
-    5,
-    5,
+    (5, 5, 5, 5),
     Stack(
       [
-        Roundrect(Js_repr("#ffffff"), Js_repr("#f1f2f6"), 10),
-        Margin(15, 15, 15, 15, child),
+        Roundrect(Color("#ffffff"), Color("#f1f2f6"), 10),
+        Margin((15, 15, 15, 15), child),
       ],
     ),
   )
