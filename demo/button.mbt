@@ -2,72 +2,52 @@
 // button with multiply style in normal/highlight/pressed state
 
 fn button2(text : String) -> @ui.Element {
-  @ui.Element::Stack(
+  Stack(
     [
       @ui.multi_style(
-        @ui.Element::Margin(
+        Margin(
           5,
           5,
           5,
           5,
-          @ui.Element::Roundrect(
-            @ui.Color::Js_repr("#22a6b3"),
-            @ui.Color::Js_repr("#7ed5dfb5"),
-            10,
-          ),
+          Roundrect(Js_repr("#22a6b3"), Js_repr("#7ed5dfb5"), 10),
         ),
         [
-          @ui.Style::Highlight(
-            @ui.Element::Margin(
+          Highlight(
+            Margin(
               0,
               0,
               0,
               0,
-              @ui.Element::Roundrect(
-                @ui.Color::Js_repr("#7ed6df"),
-                @ui.Color::Js_repr("#7ed5dfb5"),
-                10,
-              ),
+              Roundrect(Js_repr("#7ed6df"), Js_repr("#7ed5dfb5"), 10),
             ),
           ),
-          @ui.Style::Pressed(
-            @ui.Element::Margin(
+          Pressed(
+            Margin(
               10,
               10,
               10,
               10,
-              @ui.Element::Roundrect(
-                @ui.Color::Js_repr("#137983"),
-                @ui.Color::Js_repr("#7ed5dfb5"),
-                10,
-              ),
+              Roundrect(Js_repr("#137983"), Js_repr("#7ed5dfb5"), 10),
             ),
           ),
         ],
       ),
-      @ui.Element::Text(
-        @ui.Font::default(),
-        "Sample Button",
-        @ui.Color::Js_repr("white"),
-      ),
+      Text(@ui.Font::default(), "Sample Button", Js_repr("white")),
     ],
   )
 }
 
 pub fn panel(child : @ui.Element) -> @ui.Element {
-  @ui.Element::Margin(
+  Margin(
     5,
     5,
     5,
     5,
-    @ui.Element::Stack(
+    Stack(
       [
-        @ui.Element::Roundrect(
-          @ui.Color::Js_repr("#ffffff"),
-          @ui.Color::Js_repr("#f1f2f6"),
-          10,
-        ),
-        @ui.Element::Margin(15, 15, 15, 15, child),
+        Roundrect(Js_repr("#ffffff"), Js_repr("#f1f2f6"), 10),
+        Margin(15, 15, 15, 15, child),
       ],
     ),
   )
@@ -75,13 +55,13 @@ pub fn panel(child : @ui.Element) -> @ui.Element {
 
 pub fn button_layout() -> @ui.Element {
   panel(
-    @ui.Element::Row(
+    Row(
       3,
       5,
       [
         button2("button 1"),
         button2("button 2"),
-        @ui.Element::Column(2, 10, [button2("button 3"), button2("button 4")]),
+        Column(2, 10, [button2("button 3"), button2("button 4")]),
       ],
     ),
   )
