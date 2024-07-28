@@ -10,17 +10,11 @@
       const ctx = canvas.getContext('2d') 
       var moonbit = null
       const spectest = {
-        // string: {
-        //   beginConversion: () => str_conv_buf = [],
-        //   pushChar: (i,x) => str_conv_buf.push(String.fromCharCode(x)),
-        //   endConversion: () => str_conv_buf.join(''),
-        //   debugString: (js_str) => console.log(js_str)
-        // },
-        js_string: {
-          new: (js_str) => String(js_str),
-          log: (js_str) => console.log(js_str),
-          append: (js_str, other) => js_str.push(other),
-          empty: (js_str) => !!js_str,
+        string: {
+          beginConversion: () => str_conv_buf = [],
+          pushChar: (i,x) => str_conv_buf.push(String.fromCharCode(x)),
+          endConversion: () => str_conv_buf.join(''),
+          debugString: (js_str) => console.log(js_str)
         },
         canvas: {
           clearRect: (x,y,w,h) => ctx.clearRect(x,y,w,h),

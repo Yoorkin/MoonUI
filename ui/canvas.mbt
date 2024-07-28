@@ -9,17 +9,17 @@ pub fn fill_ellipse(x : Int, y : Int, w : Int, h : Int) = "canvas" "fillEllipse"
 
 pub fn stroke_ellipse(x : Int, y : Int, w : Int, h : Int) = "canvas" "strokeEllipse"
 
-pub fn set_color(color : Js_string) = "canvas" "setColor"
+pub fn set_color(color : JsString) = "canvas" "setColor"
 
-pub fn fill_text(text : Js_string, x : Int, y : Int) = "canvas" "fillText"
+pub fn fill_text(text : JsString, x : Int, y : Int) = "canvas" "fillText"
 
-pub fn set_font(font : Js_string) = "canvas" "setFont"
+pub fn set_font(font : JsString) = "canvas" "setFont"
 
-pub fn measure_text_width(text : Js_string) -> Int = "canvas" "measureTextWidth"
+pub fn measure_text_width(text : JsString) -> Int = "canvas" "measureTextWidth"
 
-pub fn measure_text_height(text : Js_string) -> Int = "canvas" "measureTextHeight"
+pub fn measure_text_height(text : JsString) -> Int = "canvas" "measureTextHeight"
 
-pub fn measure_text(text : Js_string) -> (Int, Int) {
+pub fn measure_text(text : JsString) -> (Int, Int) {
   (measure_text_width(text), measure_text_height(text))
 }
 

@@ -12,9 +12,9 @@ pub fn Color::empty() -> Color {
   Js_repr("rgba(0,0,0,0)")
 }
 
-pub fn js_color(self : Color) -> Js_string {
+pub fn js_color(self : Color) -> JsString {
   match self {
-    Js_repr(x) => x.to_js_string()
+    Js_repr(x) => from_string(x)
   }
 }
 
@@ -224,9 +224,9 @@ pub fn render(element : Element, area : Area) -> Unit {
       stroke_round_rect(area.left, area.top, area.width, area.height, round)
     }
     Text(font, text, color) => {
-      set_font(font.to_string().to_js_string())
+      set_font(from_string(font.to_string()))
       set_color(color.js_color())
-      let js_str = text.to_js_string()
+      let js_str = from_string(text)
       let (w, h) = measure_text(js_str)
       let x = area.left + (area.width - w) / 2
       let y = area.top + (area.height - h) / 2
