@@ -1,0 +1,12 @@
+{
+  "is-main": true,
+  "import": [
+    { "path": "moon_ui/ui", "alias": "ui" },
+    { "path": "moon_ui/demo", "alias": "demo" }
+  ],
+  "link": {
+    "wasm-gc": {
+      "exports": ["initialize", "on_mouse_down", "on_mouse_move", "on_mouse_up"]
+    }
+  }
+}

@@ -81,20 +81,21 @@
         },
       };
       
-      const obj = await WebAssembly.instantiateStreaming(fetch("main.wasm"), spectest)
+      const wasmUri = "target/wasm-gc/release/build/main/main.wasm"
+      const obj = await WebAssembly.instantiateStreaming(fetch(wasmUri), spectest)
       obj.instance.exports._start()
       // obj.instance.exports["MoonUI/UI::initialize"](canvas.width, canvas.height)
       moonbit = obj.instance.exports
       console.log(moonbit)
-      moonbit["MoonUI/ui::initialize"](canvas.width, canvas.height)
+      moonbit["initialize"](canvas.width, canvas.height)
       canvas.addEventListener("mousemove", (e) => {
-        moonbit['MoonUI/ui::on_mouse_move'](0, 0, e.offsetX,e.offsetY)
+        moonbit['on_mouse_move'](0, 0, e.offsetX,e.offsetY)
       });
       canvas.addEventListener("mousedown", (e) => {
-        moonbit['MoonUI/ui::on_mouse_down'](0, 0, e.offsetX,e.offsetY)
+        moonbit['on_mouse_down'](0, 0, e.offsetX,e.offsetY)
       })
       canvas.addEventListener("mouseup", (e) => {
-        moonbit['MoonUI/ui::on_mouse_up'](0, 0, e.offsetX,e.offsetY)
+        moonbit['on_mouse_up'](0, 0, e.offsetX,e.offsetY)
       })
     } 
     main()

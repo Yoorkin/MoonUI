@@ -1,16 +1,16 @@
 
 // ==================== js string ====================
-type Js_String
-func to_js_string_begin() = "string" "beginConversion"
-func set_js_string_char(i : Int, x : Char) = "string" "pushChar"
-func to_js_string_end() -> Js_String = "string" "endConversion"
-func debug_js_string(str : Js_String) = "string" "debugString"
+pub type JsString
+fn to_js_string_begin() = "string" "beginConversion"
+fn set_js_string_char(i : Int, x : Char) = "string" "pushChar"
+fn to_js_string_end() -> JsString = "string" "endConversion"
+fn debug_js_string(str : JsString) = "string" "debugString"
 
-pub func to_js_string(self : String) -> Js_String {
+pub fn from_string(x : String) -> JsString {
   to_js_string_begin()
-  var i = 0
-  while i < self.length() {
-    set_js_string_char(i, self[i])
+  let mut i = 0
+  while i < x.length() {
+    set_js_string_char(i, x[i])
     i = i + 1
   }
   to_js_string_end()
