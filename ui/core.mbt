@@ -47,7 +47,7 @@ pub struct Area {
 
 pub fn to_string(self : Area) -> String {
   let { left, top, width, height } = self
-  "Area{ left: \(left), top: \(top), width: \(width), height: \(height) }"
+  "Area{ left: \{left}, top: \{top}, width: \{width}, height: \{height} }"
 }
 
 pub fn position(left : Int, top : Int, width : Int, height : Int) -> Area {
